@@ -8,11 +8,7 @@
 const { Type } = require('leap-core');
 const { bufferToHex } = require('ethereumjs-util');
 
-const checkEnoughVotes = require('../../period/utils/checkEnoughVotes');
-const submitPeriod = require('../../txHelpers/submitPeriod');
-const { logTx } = require('../../utils/debug');
-
-module.exports = async (state, tx, bridgeState) => {
+module.exports = async (state, tx) => {
   if (tx.type !== Type.PERIOD_VOTE) {
     throw new Error('[period vote] periodVote tx expected');
   }
@@ -46,20 +42,4 @@ module.exports = async (state, tx, bridgeState) => {
   }
 
   state.periodVotes[periodRoot].push(slotId);
-
-  const { result } = checkEnoughVotes(periodRoot, state);
-  if (result) {
-    logTx(`Enough votes to submit period: `, periodRoot);
-    try {
-      await submitPeriod(
-        periodRoot,
-        state.slots,
-        bridgeState.blockHeight,
-        bridgeState
-      );
-    } catch (err) {
-      /* istanbul ignore next */
-      logTx(`submit period: ${err}`);
-    }
-  }
 };

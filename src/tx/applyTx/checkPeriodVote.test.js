@@ -13,6 +13,13 @@ const TENDER_KEY_1 = '0x0000069D9EDB21592CBDF4CC49956EA53E59656FC2D8BBD1AE3F427B
 const merkleRoot =
   '0x3342fc20b1a6b66a964d58e4f56ec38c3421964237b41853a603e1abd0b7885d';
 
+const period = {
+  merkleRoot() {
+    return merkleRoot;
+  },
+  prevHash: '0x5678',
+};
+
 jest.mock('../../txHelpers/submitPeriod', () => jest.fn());
 const submitPeriodMock = jest.requireMock('../../txHelpers/submitPeriod');
 
@@ -37,6 +44,7 @@ const stateMock = attrs => ({
 
 const bridgeStateMock = attrs => ({
   blockHeight: 1,
+  previousPeriod: period,
   currentState: stateMock(),
   ...attrs,
 });
