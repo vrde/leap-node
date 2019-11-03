@@ -134,7 +134,7 @@ module.exports = class BridgeState {
           array.push(event.tokenAddr);
         }
       },
-      EpochLength: (event) => {
+      EpochLength: event => {
         const { blockNumber, returnValues } = event;
         this.epochLengths.push([
           Number(returnValues.epochLength),
