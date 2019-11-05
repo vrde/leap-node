@@ -151,12 +151,12 @@ if (cliArgs.network) {
 
 if (!cliArgs.config) {
   console.log('Config/network option is required. See --help');
-  process.exit(0);
+  process.exit(1);
 }
 
 if (cliArgs.privateKey && !fs.existsSync(cliArgs.privateKey)) {
   console.log(`${cliArgs.privateKey} does not exist`);
-  process.exit(0);
+  process.exit(1);
 }
 
 module.exports = cliArgs;

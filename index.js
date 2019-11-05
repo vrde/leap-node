@@ -35,7 +35,7 @@ async function run() {
       result = readConfig(cliArgs.config);
     } catch (err) {
       console.error(err.message);
-      process.exit(0);
+      process.exit(1);
     }
 
     return result;
